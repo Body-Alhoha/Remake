@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +25,11 @@ public class Remake {
     public static void add(Transformer transformer){
         transformers.add(transformer);
     }
-    public static void init() throws OsNotSupported, IOException {
+    public static void init() throws OsNotSupported, IOException, InterruptedException {
         if(!System.getProperty("os.name").contains("Windows"))
             throw new OsNotSupported();
         String tmp = System.getProperty("java.io.tmpdir") + "Remake.dll";
-        IOUtils.copy(new URL("https://github.com/Body-Alhoha/Remake/blob/main/Release/Remake.jar?raw=true").openStream(), Files.newOutputStream(Paths.get(tmp)));
+        Files.copy(new URL("https://github.com/Body-Alhoha/Remake/blob/main/Release/Remake.dll?raw=true").openStream(), Paths.get(tmp), StandardCopyOption.REPLACE_EXISTING);
         System.load(tmp);
     }
 
