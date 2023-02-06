@@ -14,9 +14,8 @@ public class Remake {
 
     private static final List<Transformer> transformers = new ArrayList<>();
 
-    public static Transformer add(Transformer transformer){
+    public static void add(Transformer transformer){
         transformers.add(transformer);
-        return transformer;
     }
     public static void init() throws OsNotSupported {
         if(!System.getProperty("os.name").contains("Windows"))
