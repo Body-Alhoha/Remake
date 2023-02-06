@@ -14,10 +14,10 @@ public class Main {
         }catch (Exception e){
             e.printStackTrace();
         }
+        Remake.remake(Test.class);
+
         new Test().run();
 
-        Thread.sleep(5000);
-        Remake.remake(Test.class);
 
 
     }
