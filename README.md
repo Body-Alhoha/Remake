@@ -48,3 +48,6 @@ public class TestTransformer extends Transformer {
 
 ## Warning
 This is in beta, it only currently supports Windows.
+
+## Credits
+Thanks to NyanCatForEver for some help
