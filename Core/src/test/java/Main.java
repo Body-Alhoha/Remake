@@ -19,6 +19,6 @@ public class Main {
         // Remake the Test class
         Remake.remake(Test.class);
 
-        System.out.println("Remaked!");
+        System.out.println("Remade!");
     }
 }
