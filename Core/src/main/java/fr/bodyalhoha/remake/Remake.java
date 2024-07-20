@@ -26,6 +26,10 @@ public class Remake {
      * @throws IOException             If an I/O error occurs
      */
     public static void init() throws OSNotSupportedException, IOException {
+        // If Remake has already been initialized, return
+        if (initialized)
+            return;
+
         // If the operating system is not Windows, throw an exception
         if (!System.getProperty("os.name").contains("Windows"))
             throw new OSNotSupportedException();
