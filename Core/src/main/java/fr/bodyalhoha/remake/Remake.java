@@ -6,9 +6,11 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
@@ -25,7 +27,7 @@ public class Remake {
      * @throws OSNotSupportedException If the operating system is not supported
      * @throws IOException             If an I/O error occurs
      */
-    public static void init() throws OSNotSupportedException, IOException {
+    public static void init() throws OSNotSupportedException, IOException, InterruptedException {
         // If Remake has already been initialized, return
         if (initialized)
             return;
@@ -34,16 +36,23 @@ public class Remake {
         if (!System.getProperty("os.name").contains("Windows"))
             throw new OSNotSupportedException();
 
-        // Copy the Remake.dll file to the temporary directory
+        // Get the Remake.dll file from the resources
         InputStream inputStream = Remake.class.getResourceAsStream("/Remake.dll");
         if (inputStream == null)
             throw new IOException("Remake.dll not found in resources.");
 
-        String dllPath = System.getProperty("java.io.tmpdir") + "Remake.dll";
-        Files.copy(inputStream, Paths.get(dllPath), StandardCopyOption.REPLACE_EXISTING);
+        // Copy the Remake.dll file to a temporary directory
+        String tempDir = System.getProperty("java.io.tmpdir");
+        String dllPath = tempDir + "Remake" + System.currentTimeMillis() + ".dll";
+        Path path = Paths.get(dllPath);
+
+        Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
 
         // Load the Remake.dll file
         System.load(dllPath);
+
+        // Delete the file on exit
+        new File(dllPath).deleteOnExit();
 
         // Remake has been initialized
         initialized = true;
@@ -73,7 +82,7 @@ public class Remake {
         classReader.accept(classNode, 0);
 
         // Run all the transformers
-        transformers.forEach((transformer -> transformer.run(classNode)));
+        transformers.stream().filter(transformer -> transformer.getKlass().equals(name)).forEach((transformer -> transformer.run(classNode)));
 
         // Convert the transformed ClassNode to a byte array
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
