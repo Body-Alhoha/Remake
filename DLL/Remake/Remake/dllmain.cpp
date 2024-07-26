@@ -66,4 +66,3 @@ JNIEXPORT void JNICALL Java_fr_bodyalhoha_remake_NativeManager_remake(JNIEnv* ge
     to_remap = name;
     jvmti->RetransformClasses(1, &klass);
 }
-
