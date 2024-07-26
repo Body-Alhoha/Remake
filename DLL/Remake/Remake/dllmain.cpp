@@ -1,4 +1,3 @@
-#include <Windows.h>
 #include <jvmti.h>
 #include "fr_bodyalhoha_remake_NativeManager.h"
 #include <iostream>
@@ -66,10 +65,5 @@ JNIEXPORT void JNICALL Java_fr_bodyalhoha_remake_NativeManager_remake(JNIEnv* ge
     const char* name = get_class_name(env, klass);
     to_remap = name;
     jvmti->RetransformClasses(1, &klass);
-}
-
-
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason_for_call, LPVOID lpReserved) {
-    return TRUE;
 }
 
