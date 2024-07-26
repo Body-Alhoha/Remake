@@ -50,7 +50,7 @@ public class TestTransformer extends Transformer {
 ```
 
 ## Warning
-This is in beta, it only currently supports Windows.
+This is in beta.
 
 ## Credits
 Thanks to NyanCatForEver for some help, and thanks to all repository contributors
