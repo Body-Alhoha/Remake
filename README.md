@@ -1,5 +1,5 @@
 # Remake
-
+> Better version (i guess) here: https://github.com/StellarTweaks/Remake
 ## Initializing
 
 ```java
